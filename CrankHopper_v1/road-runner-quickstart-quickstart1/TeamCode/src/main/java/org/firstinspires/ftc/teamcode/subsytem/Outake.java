@@ -94,6 +94,7 @@ public class Outake {
 //        sleep(400);
 //        outakeGrip.setPosition(OuttakePixelGrip);
         gripopen();
+        sleep(200);
         outakepusho();
         sleep(300);
         gripclose();

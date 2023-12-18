@@ -93,6 +93,7 @@ public class AutoV3 extends LinearOpMode {
                 .splineTo(new Vector2d(57.3, -40), 0,   SampleMecanumDrive.getVelocityConstraint(25, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                         SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL/2))
                 //.splineToConstantHeading(new Vector2d(56.5,-40),0)
+                .resetConstraints()
                 .UNSTABLE_addTemporalMarkerOffset(0.0000001, () ->
                 {
                     outake.outakeGrip.setPosition(OuttakePixelDrop);
@@ -106,6 +107,7 @@ public class AutoV3 extends LinearOpMode {
 
 
 ////  ------------------ Backdrop to First Two intake -----------------------------
+                .resetConstraints()
                 .UNSTABLE_addTemporalMarkerOffset(0.4, () -> {
                     outake.outakeGrip.setPosition(OuttakePixelGrip);
                     outake.outakeArm.setPosition(armGripPos);
@@ -132,8 +134,8 @@ public class AutoV3 extends LinearOpMode {
                 .UNSTABLE_addTemporalMarkerOffset(0.0001, ()->{
                     intake.intakeStack(leftServoGrippingPos);
                 })
-                .waitSeconds(1.0)
-                .UNSTABLE_addTemporalMarkerOffset(0.4, ()->{
+                .waitSeconds(0.5)
+                .UNSTABLE_addTemporalMarkerOffset(0.001, ()->{
                     intake.intakeStack(topPos1);
                 })
 
@@ -149,7 +151,7 @@ public class AutoV3 extends LinearOpMode {
                 .splineTo(new Vector2d(57.3,-31),0, SampleMecanumDrive.getVelocityConstraint(25, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                         SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL/2))
 
-
+                .resetConstraints()
 
                 .UNSTABLE_addTemporalMarkerOffset(0.0000001, () -> {
                     intake.IntakeMotor.setPower(0);
@@ -159,7 +161,7 @@ public class AutoV3 extends LinearOpMode {
                     sleep(200);
                     outake.outakeGrip.setPosition(OuttakePixelDrop);
 
-                    lift.extendToMedium();
+                    //lift.extendToMedium();
 
                     outake.outakeGrip.setPosition(OuttakePixelDrop);
                     sleep(200);
@@ -173,7 +175,7 @@ public class AutoV3 extends LinearOpMode {
                 })
                 .waitSeconds(1)
                 .setReversed(true)
-
+                .resetConstraints()
 
 ////----------------------------------------------------------------------------------------
 
@@ -203,14 +205,14 @@ public class AutoV3 extends LinearOpMode {
                 .UNSTABLE_addTemporalMarkerOffset(0.0001, ()->{
                     intake.intakeStack(leftServoGrippingPos);
                 })
-                .waitSeconds(1.0)
+                .waitSeconds(0.5)
                 .UNSTABLE_addTemporalMarkerOffset(0.4, ()->{
                     intake.intakeStack(topPos1);
                 })
 
                 .lineToConstantHeading(new Vector2d(17,-10))
                 .UNSTABLE_addTemporalMarkerOffset(0.001, () -> {
-                    lift.extendToLow();
+                    lift.extendToMedium();
                     outake.outakeArm.setPosition(armPlacePos);
                     //sleep(1000);
 
@@ -218,6 +220,7 @@ public class AutoV3 extends LinearOpMode {
                 .splineToConstantHeading(new Vector2d(53,-31), 0)
                 .splineTo(new Vector2d(57.5,-31),0, SampleMecanumDrive.getVelocityConstraint(25, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                         SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL/2))
+                .resetConstraints()
 
                 .UNSTABLE_addTemporalMarkerOffset(0.0000001, () -> {
                     intake.IntakeMotor.setPower(0);
@@ -236,10 +239,12 @@ public class AutoV3 extends LinearOpMode {
                     intake.IntakeMotor.setPower(0);
 
 
-
                 })
-                .waitSeconds(5)
+                .waitSeconds(4)
+                .splineToConstantHeading(new Vector2d(53,-31), 0)
+                .waitSeconds(1)
                 .setReversed(true)
+                .resetConstraints()
 ////------------------------------------------------------------------------------------------------
                 .build();
 

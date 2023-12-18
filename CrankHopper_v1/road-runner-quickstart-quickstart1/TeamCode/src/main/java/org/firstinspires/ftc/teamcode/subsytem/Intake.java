@@ -20,7 +20,7 @@ public class Intake {
 
     public String intakeState="INIT";
 
-    public static double leftServoGrippingPos = 0.5;//left servo 0.1594 for intake of  pixels
+    public static double leftServoGrippingPos = 0.48;//left servo 0.1594 for intake of  pixels
 
     public static double rightServoGrippingPos = (1.0 - leftServoGrippingPos);
 
