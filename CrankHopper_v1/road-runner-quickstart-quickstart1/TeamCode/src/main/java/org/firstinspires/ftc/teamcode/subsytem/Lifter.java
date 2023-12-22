@@ -24,7 +24,7 @@ public class Lifter {
     public final int HOME_POSITION = 0, LOW = 1, MID = 2, HIGH = 3, low_mid= 4;
 
 
-    public final int[] POSITIONS = {-402,120, 410, 650,-150};
+    public final int[] POSITIONS = {-402,120, 410, 650,-150}; //-402
 
     //
     public static double Kp = 0.01;

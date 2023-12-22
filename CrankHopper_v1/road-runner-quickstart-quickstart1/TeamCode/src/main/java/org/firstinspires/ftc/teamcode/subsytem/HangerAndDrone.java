@@ -15,7 +15,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 public class HangerAndDrone{
     public Servo hanger, drone;
     public DcMotor HangerMotor;
-    public static double hangerInit = 0.38, droneInit = 0.9, droneShoot = 0.2, hangShoot = 0.8, i = 0;
+    public static double hangerInit = 0.38, droneInit = 0.5, droneShoot = 1, hangShoot = 0.8, i = 0;
 
     public boolean done = false;
 

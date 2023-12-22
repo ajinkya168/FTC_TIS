@@ -20,9 +20,9 @@ public class Intake {
 
     public String intakeState="INIT";
 
-    public static double leftServoGrippingPos = 0.48;//left servo 0.1594 for intake of  pixels
+    public static double leftServoGrippingPos = 0.53;//left servo 0.1594 for intake of  pixels
 
-    public static double rightServoGrippingPos = (1.0 - leftServoGrippingPos);
+    public static double rightServoGrippingPos = 0.55; //(1.0 - leftServoGrippingPos);
 
     public static double leftServoInitPos = 0.2; //0.15 // left servo 0.829 for init
     public static double rightServoInitPos = (1.0 - leftServoInitPos);
@@ -31,8 +31,8 @@ public class Intake {
     public static double CycleIntakrLeftServo = 0.1;
     public static double CycleIntakrRightServo = (1.0 - CycleIntakrLeftServo);
 
-    public static double rightServoReverseIntakePos = 0.4;
-    public static double leftServoReverseIntakePos = (1.0 - rightServoReverseIntakePos);
+    public static double rightServoReverseIntakePos = 0.43;
+    public static double leftServoReverseIntakePos = 0.6;//(1.0 - rightServoReverseIntakePos);
 
     public static int i = 0;
 
@@ -52,7 +52,7 @@ public class Intake {
 
     //INTAKE MOTOR
     public static double intakeOnFor=1;
-    public static double intakeREV=0.5;
+    public static double intakeREV=1;
 
     public Intake(HardwareMap hardwareMap, Telemetry telemetry) {
         InR = hardwareMap.get(Servo.class, "InR");
@@ -85,8 +85,8 @@ public class Intake {
 
     public void intakeStack(double PF){
         intakeState="GRIP";
-        leftServoGrippingPos =PF;
-        rightServoGrippingPos = (1.0 - leftServoGrippingPos);
+        //leftServoGrippingPos =PF;
+        //rightServoGrippingPos = (1.0 - leftServoGrippingPos);
         InR.setPosition(leftServoGrippingPos);
         InL.setPosition(rightServoGrippingPos);
     }
@@ -149,6 +149,17 @@ public class Intake {
 
 
     }
+    public void IntakeOnePixel(double topPos){
+
+        //intakeState="GRIP";
+            leftServoGrippingPos = topPos;
+            rightServoGrippingPos = (1.0 - leftServoGrippingPos);
+            InR.setPosition(leftServoGrippingPos);
+            InL.setPosition(rightServoGrippingPos);
+            sleep(1000);
+    }
+
+
 //    public void IntakeTwoPixel(double Pos){
 //
 //        //intakeState="GRIP";

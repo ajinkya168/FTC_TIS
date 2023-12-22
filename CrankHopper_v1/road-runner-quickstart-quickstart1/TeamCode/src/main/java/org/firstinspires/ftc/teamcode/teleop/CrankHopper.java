@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.teleop;
 
 import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.arcrobotics.ftclib.controller.PIDController;
@@ -17,6 +18,7 @@ import org.firstinspires.ftc.teamcode.subsytem.Lifter;
 import org.firstinspires.ftc.teamcode.subsytem.Outake;
 
 @TeleOp
+//@Config
 public class CrankHopper extends LinearOpMode {
 
     SampleMecanumDrive drive = null;
@@ -28,9 +30,9 @@ public class CrankHopper extends LinearOpMode {
     public static double turn = 0.6;
 
 
-    public static double Yvalue = 0.95;
-    public static double Xvalue = 0.95;
-    public static double TurnX  = 0.9;
+    public static double Yvalue = 1;
+    public static double Xvalue = 1;
+    public static double TurnX  = 1;
     //
 
     Servo hanger_servo,plane;
@@ -248,30 +250,22 @@ public class CrankHopper extends LinearOpMode {
             if(gamepad1.dpad_left){
 
                 endgame.ShootDrone();
-                lift.extendToLow();
-                endgame.HangerOn();
-                lift.extendTolow_mid();
 
             }
 
-//            if(gamepad1.dpad_right){
-//                endgame.ShootDrone();
-//
-//            }
+            if(gamepad1.dpad_right){
+                endgame.HangerOn();
+
+            }
             if (gamepad1.dpad_up){
                 endgame.HangerUp();
-                //endgame.HangerMotor.setPower(0);
             }
 
-//            if(endgame.done){
-//                endgame.HangerMotor.setPower(0);
-//
-//            }
+
             if(gamepad1.dpad_down){
                 endgame.HangerDown();
             }
 
-//            if(gamepad1.start)
             if(gamepad1.back){
                 outake.gripclose();
             }
@@ -339,11 +333,11 @@ public class CrankHopper extends LinearOpMode {
         lift.extendToHigh();
         outake.outakeArmPlace();
     }
-    public void DropMechInactive(double elevatorpower){
+    public  void DropMechInactive(double elevatorpower){
         lift.extendTo(val,elevatorpower);
-        Outake.outakeArm.setPosition(0.7);
+      //  Outake.outakeArm.setPosition(0.7);
         //sleep(500);
-        Outake.outakeArm.setPosition(0.8);
+        //Outake.outakeArm.setPosition(0.8);
         outake.outakeArmGripPos();
         outake.closeGripper();
     }

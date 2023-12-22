@@ -25,14 +25,14 @@ public class Outake {
     public static double OuttakePixelDrop = 0.2;
 
     public static double Outakepushout =0.465;
-    public static double Outakepushin = 0.51;
+    public static double Outakepushin = 0.55;
 
     public static double outgripopen = 0.432;
-    public static double outgripclose = 0.505;
+    public static double outgripclose = 0.517;
 
-    public static double armGripPos = 0.92;     //0.95
-    public static double armInitPos= 0.92;      //0.95
-    public static double armPlacePos=0.57;
+    public static double armGripPos = 0.9;     //0.95
+    public static double armInitPos= 0.9;      //0.95
+    public static double armPlacePos = 0.42;//armInitPos - 0.48; //0.5
 
 
 
@@ -94,12 +94,11 @@ public class Outake {
 //        sleep(400);
 //        outakeGrip.setPosition(OuttakePixelGrip);
         gripopen();
-        sleep(200);
         outakepusho();
-        sleep(300);
-        gripclose();
         sleep(200);
+        gripclose();
         outakepushi();
+
     }
     public void PixelDrop2(){
         outakeGrip.setPosition(0.6494);
