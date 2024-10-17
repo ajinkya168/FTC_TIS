@@ -21,7 +21,6 @@ public class DynamicAuto extends LinearOpMode {
     Intake intake=null;
     Outake outake=null;
     DistanceSensor ds = null;
-
     public String state = null;
 
     public void runOpMode(){
@@ -39,7 +38,6 @@ public class DynamicAuto extends LinearOpMode {
         TrajectorySequence ts1 = drive.trajectorySequenceBuilder(startPose)
                 //.addTemporalMarker(()->intake.intakeAutoStart())
                 .lineToConstantHeading(new Vector2d(26 , -36))
-
                 .splineToConstantHeading(new Vector2d(53,-40),0)
                 .splineToConstantHeading(new Vector2d(57,-40),0)
                 .waitSeconds(2)
@@ -65,6 +63,10 @@ public class DynamicAuto extends LinearOpMode {
                 .splineToConstantHeading(new Vector2d(12,-62.001),0)
                 .addTemporalMarker(()->autoTele())
                         .build();
+
+
+
+
         waitForStart();
 
         if(!isStopRequested()){

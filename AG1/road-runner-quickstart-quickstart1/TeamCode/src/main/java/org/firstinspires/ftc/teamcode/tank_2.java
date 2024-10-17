@@ -70,10 +70,14 @@ public class tank_2 extends LinearOpMode {
     public Servo Arm = null;
     public Servo drone = null;
     public static double drone_pos = 0;
-    public static double Grip_pos = 0.4;
+    public static double Grip_pos = 0.878;
     public static double arm_pos = 0.4;
+    public static double arm_pos_init = 0.3;
+    public static double arm_init = 0.6;
+    public static double GripInPos = 0.9;
+    public static double droneInit = 0.4;
 
-
+    public static double droneShoot = 0;
     double clawOffset = 0;
 
     public static final double MID_SERVO = 0.5;
@@ -90,7 +94,7 @@ public class tank_2 extends LinearOpMode {
         leftDrive = hardwareMap.get(DcMotor.class, "left_drive");
         rightDrive = hardwareMap.get(DcMotor.class, "right_drive");
         lifter = hardwareMap.get(DcMotorEx.class, "lifter");
-        Arm = hardwareMap.get(Servo.class, "GripR");
+        Arm = hardwareMap.get(Servo.class, "Arm");
         int pos = 0;
 //        drone = hardwareMap.get(Servo.class, "drone");
 
@@ -100,7 +104,7 @@ public class tank_2 extends LinearOpMode {
         // Note: The settings here assume direct drive on left and right wheels.  Gear Reduction or 90 Deg drives may require direction flips
         leftDrive.setDirection(DcMotor.Direction.FORWARD);
         rightDrive.setDirection(DcMotor.Direction.REVERSE);
-        lifter.setDirection(DcMotor.Direction.FORWARD);
+        lifter.setDirection(DcMotor.Direction.REVERSE);
         lifter.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         lifter.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         lifter.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -112,7 +116,7 @@ public class tank_2 extends LinearOpMode {
 
         // Define and initialize ALL installed servos.
         GripIn = hardwareMap.get(Servo.class, "GripL");
-        drone = hardwareMap.get(Servo.class, "Arm");
+        drone = hardwareMap.get(Servo.class, "Drone");
 //        GripIn.setPosition(MID_SERVO);
 //        GripOut.setPosition(MID_SERVO);
 
@@ -128,8 +132,14 @@ public class tank_2 extends LinearOpMode {
 //    }
 //
 //    /*
-//     * Code to run ONCE when the driver hits PLAY
+//     * Code to run ONCE when the driver hits PLA
 //     */
+        while(opModeInInit()) {
+            GripIn.setPosition(GripInPos);
+            sleep(500);
+            Arm.setPosition(arm_pos_init);
+            drone.setPosition(droneInit);
+        }
         waitForStart();
         while (opModeIsActive()) {
             double drive;
@@ -141,36 +151,36 @@ public class tank_2 extends LinearOpMode {
             drive = -gamepad1.left_stick_y;
             turn = gamepad1.right_stick_x;
 
-            leftDrive.setPower(Range.clip(drive + turn, -0.7, 0.7));
-            rightDrive.setPower(Range.clip(drive - turn, -0.7, 0.7));
+            leftDrive.setPower(Range.clip( drive + turn, -1, 1));
+            rightDrive.setPower(Range.clip(drive - turn, -1, 1));
 
             // Use gamepad left & right Bumpers to open and close the claw
             if (gamepad1.right_bumper) {
 
-                GripIn.setPosition(1);
+                GripIn.setPosition(GripInPos);
+
             } else if (gamepad1.a) {
 
                 GripIn.setPosition(Grip_pos);
             } else if (gamepad1.b) {
 
-                GripIn.setPosition(0.3);
+                GripIn.setPosition(0.7);
             }
 //        else if (gamepad1.b){
 //
 //            GripIn.setPosition(servo_pos);
 //        }
             else if (gamepad1.dpad_right) {
-
-                Arm.setPosition(0.65);
-            } else if (gamepad1.dpad_left) {
-
-                Arm.setPosition(arm_pos);
-            } else if (gamepad1.x) {
-
-                drone.setPosition(drone_pos);
-            } else if (gamepad1.y) {
-
                 drone.setPosition(1);
+
+              //  Arm.setPosition(0.65);
+            }
+            else if(gamepad1.x){
+                Arm.setPosition(arm_pos);
+            }
+            else if(gamepad1.y){
+
+                Arm.setPosition(arm_init);
             }
 //        else if(gamepad1.left_bumper){
 //            drone.setPosition(0.5);
@@ -182,7 +192,9 @@ public class tank_2 extends LinearOpMode {
 
             // Use gamepad buttons to move the arm up (Y) and down (A)
             if (gamepad1.dpad_up) {
-                pos = 3000;}
+                pos = 3000;
+                Arm.setPosition(arm_init);
+            }
 
              if (gamepad1.dpad_down) {
                 pos = 0;
@@ -192,6 +204,11 @@ public class tank_2 extends LinearOpMode {
             }
             if (gamepad1.right_trigger > 0.8) {
                 pos -= 25;
+                if(lifter.getCurrentPosition() < 0){
+                    lifter.setTargetPosition(0);
+                    lifter.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    lifter.setPower(0.8);
+                }
             }
             lifter.setTargetPosition(pos);
             lifter.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);

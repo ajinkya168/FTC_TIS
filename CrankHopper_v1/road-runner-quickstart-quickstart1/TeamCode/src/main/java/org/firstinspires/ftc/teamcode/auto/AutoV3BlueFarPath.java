@@ -24,6 +24,7 @@ import org.firstinspires.ftc.teamcode.subsytem.Intake;
 import org.firstinspires.ftc.teamcode.subsytem.Lifter;
 import org.firstinspires.ftc.teamcode.subsytem.Outake;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
+import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequenceBuilder;
 
 @Autonomous
 //@Config
@@ -58,12 +59,12 @@ public class AutoV3BlueFarPath extends LinearOpMode {
         dsFront = hardwareMap.get(DistanceSensor.class, "dsFront");
         dsBack = hardwareMap.get(DistanceSensor.class, "dsBack");
         InitFunction();
-
+        Pose2d newStartPose = null;
         Pose2d startPose = new Pose2d(-33,69,Math.toRadians(180));
         drive.setPoseEstimate(startPose);
 
 //        TrajectorySequence trajectoryseq
-//  -------------------------------------- FIRST CYCLE ----------------------------------------------
+//  -------------------------------------- LEFT CYCLE ----------------------------------------------
 //        ------------------------ Start point to intake ------------------------------
 
         TrajectorySequence trajectoryseqLeft = drive.trajectorySequenceBuilder(startPose)
@@ -74,8 +75,12 @@ public class AutoV3BlueFarPath extends LinearOpMode {
                     intake.IntakeMotor.setPower(0.7);
                 })
 
-                .lineToConstantHeading(new Vector2d(-32, 35))
+                .lineToConstantHeading(new Vector2d(-32, 37))
                 .waitSeconds(0.5)
+               // .build();
+//---------------------------------------------------------------------------------------------
+
+            //   TrajectorySequenceBuilder NormalTrajectory = drive.trajectorySequenceBuilder(newStartPose)
                 .splineToLinearHeading(new Pose2d(-50,38, Math.toRadians(0)),0)
                 .lineToConstantHeading(new Vector2d(-54.5, 39))
                 .UNSTABLE_addTemporalMarkerOffset(0.0000001, ()->{
@@ -89,7 +94,6 @@ public class AutoV3BlueFarPath extends LinearOpMode {
                     intake.InR.setPosition(0.53);
                     intake.InL.setPosition(0.55);
                 })
-//------------------------------------------------------------------------------------
 // ---------------------------------- intake to Backrop -----------------------------
                 .waitSeconds(0.3)
                 .lineToConstantHeading(new Vector2d(-36, 14)) //close to start
